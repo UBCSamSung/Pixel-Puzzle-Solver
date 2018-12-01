@@ -50,6 +50,8 @@ def solve(n, rowHint, colHint):
 
 def check_line(line, hint, strict=False):
     segments=get_segments(line)
+    if segments==[]:
+        segments=[0]
     # print("segments:", segments)
     # print("strict:", strict)
     if strict:
