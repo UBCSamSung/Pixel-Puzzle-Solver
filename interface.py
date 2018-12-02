@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter.constants import *
 import numpy as np
 import random
 
@@ -15,11 +14,23 @@ class Application(tk.Frame):
         self.master = master
         self.pack()
         self.create_widgets()
+        self.interrupt=False
+        self.counter=0
+        self.loop()
+    
+    def loop(self):
+        while not self.interrupt:
+            self.counter+=1
+            if self.counter%100==1:
+                self.update()
+            self.label.config(text=self.counter)
 
     def create_widgets(self):
 
         self.label=tk.Label(self, text="Pixel Puzzle Solver")
         self.label.pack(side="top")
+        self.label.bind(sequence="<Button-1>", func=self.left_click(1))
+
         self.board=self.create_board()
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
@@ -37,9 +48,9 @@ class Application(tk.Frame):
                 if coordinate==(0,0):
                     continue
                 widget=tk.Button(board, image=self.tile_plain)
-                widget.bind(sequence="<Button-1>", func=self.left_click(id))
-                widget.bind(sequence="<Button-3>", func=self.right_click(id))
-                widget.grid(row=coordinate[1],column=coordinate[0], sticky=N)
+                widget.bind(sequence="<Button-1>", func=lambda button_id:self.left_click(button_id))
+                widget.bind(sequence="<Button-3>", func=lambda button_id:self.right_click(button_id))
+                widget.grid(row=coordinate[1],column=coordinate[0])
                 button = {
                     "widget":widget,
                     "id":button_id,
@@ -51,10 +62,14 @@ class Application(tk.Frame):
         
     def left_click(self, button_index):
         # TODO
+        print("left clicked", button_index)
+        self.interrupt=True
         pass
     
     def right_click(self, button_index):
         # TODO
+        self.interrupt=False
+        self.loop()
         pass
 
 if __name__ == "__main__":
