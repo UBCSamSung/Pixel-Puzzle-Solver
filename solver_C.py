@@ -1,7 +1,10 @@
-# Satisfiability problem
+# Python 3.7.1
+
+# Human-assisted WalkSat
 
 import numpy as np
 import random
+import time
 import tkinter as tk
 
 def main():
@@ -151,6 +154,7 @@ class Solver():
         self.app = Application(master=root, board=board, rowHints=rowHints, colHints=colHints)
         self.app.certain_coordinates = self.certainAtoms
         self.is_quit=False
+        time.sleep(10)
 
     def solve(self):
         board=self.board
@@ -161,7 +165,7 @@ class Solver():
         minUnsatCount=2*n
         while self.is_quit==False:
             self.iteration+=1
-            verbose=self.iteration%100==1
+            verbose=self.iteration%10==1
             if self.iteration%10000==1:
                 print("restart")
                 for i in range(n):

@@ -1,4 +1,6 @@
-# Satisfiability problem
+# Python 3.7.1
+
+# WalkSat Approach
 
 import numpy as np
 import random

@@ -1,3 +1,5 @@
+# Python 3.7.1
+
 # Brute Force Approach
 # Able to solve 3x3 game board (512 states)
 # Cannot solve 10x10 game board 1e30 state
@@ -11,9 +13,10 @@ def main():
         colHint=[[int(x) for x in input().strip().split()] for _ in range(n)]
         solve(n, rowHint, colHint)
 
+iteration=0
+
 def solve(n, rowHint, colHint):
     def helper_solve(curr_y, curr_x):
-        print("y"*curr_y+"x"*curr_x)
         if curr_y==n:
             print("solved board:")
             print(board)
@@ -21,6 +24,8 @@ def solve(n, rowHint, colHint):
         for assignment in [1,0]:
             # print("y: {}, x: {}, val: {}".format(curr_y, curr_x, assignment))
             board[curr_y, curr_x]=assignment
+            global iteration
+            iteration+=1
             # print("current board:")
             # print(board)
             if not check_line(board[curr_y, :], rowHint[curr_y], strict=((curr_x+1)==n)):
@@ -46,6 +51,7 @@ def solve(n, rowHint, colHint):
     # print("board:")
     # print(board)
     helper_solve(0, 0)
+    print("iterations:", iteration)
 
 
 def check_line(line, hint, strict=False):
